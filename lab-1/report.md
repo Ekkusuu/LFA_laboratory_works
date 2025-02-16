@@ -86,8 +86,6 @@ def to_finite_automaton(self):
 
 ## Conclusions / Screenshots / Results
 
-* Conclusion
-
 In this project, we've created a system that takes a formal grammar and turns it into a finite automaton. The Grammar class lets us generate valid strings based on specific production rules, while the FiniteAutomaton class checks if those strings can be accepted by a series of state transitions. The to_finite_automaton method connects the two by converting the grammar into an automaton, allowing us to easily validate strings. This approach helps us better understand how formal languages work
 
 ![Result 1](result-1.png)
