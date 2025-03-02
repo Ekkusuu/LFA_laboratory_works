@@ -45,7 +45,7 @@ class Grammar:
         while any(symbol in self.VN for symbol in current):
             for symbol in current:
                 if symbol in self.VN:
-                    replacement = random.choice(self.P[symbol])
+                    replacement = rand±om.choice(self.P[symbol])
                     current = current.replace(symbol, replacement, 1)
                     break
         return current
