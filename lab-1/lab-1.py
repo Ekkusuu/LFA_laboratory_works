@@ -37,6 +37,28 @@ class Grammar:
         
         return FiniteAutomaton(states, alphabet, transitions, start_state, final_states)
 
+    def classify_grammar(self):
+        for non_terminal, productions in self.P.items():
+            for production in productions:
+                if len(production) == 1 and production in self.VT:
+                    continue
+                elif len(production) == 2 and production[0] in self.VT and production[1] in self.VN:
+                    continue
+                elif all(symbol in (self.VN | self.VT) for symbol in production):
+                    continue
+                else:
+                    return "Type 0"
+
+        if all(len(production) <= 2 for productions in self.P.values() for production in productions):
+            return "Type 3"
+
+        for non_terminal, productions in self.P.items():
+            for production in productions:
+                if len(production) > 1:
+                    return "Type 1"
+
+        return "Type 2"
+
 class FiniteAutomaton:
     def __init__(self, states, alphabet, transitions, start_state, final_states):
         self.states = states
@@ -68,6 +90,8 @@ class Main:
 
         grammar = Grammar(VN={"S", "A", "B", "C"}, VT={"a", "b", "c", "d"}, P=grammar_rules, start_symbol="S")
         print("Generated strings:", grammar.generate_multiple_strings())
+
+        print("Grammar Classification:", grammar.classify_grammar())
 
         finite_automaton = grammar.to_finite_automaton()
         user_input = input("Enter a string to check: ")
