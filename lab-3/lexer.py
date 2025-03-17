@@ -14,6 +14,8 @@ class TokenType(Enum):
     OPERATOR = auto()
     EOF = auto()
 
+VALID_KEYWORDS = {"event", "person", "link"}
+
 class Token:
     def __init__(self, type: TokenType, value: Union[str, int, float]):
         self.type = type
@@ -51,6 +53,8 @@ def lexer(code: str) -> List[Token]:
         elif type == 'NUMBER':
             tokens.append(Token(TokenType.NUMBER, value))
         elif type == 'IDENTIFIER':
+            if value not in VALID_KEYWORDS:  # Ensure identifiers are valid keywords or attributes
+                raise RuntimeError(f"Error: Invalid keyword '{value}'")
             tokens.append(Token(TokenType.IDENTIFIER, value))
         elif type == 'ASSIGN':
             tokens.append(Token(TokenType.ASSIGN, value))
